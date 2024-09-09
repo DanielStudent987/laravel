@@ -1,0 +1,20 @@
+{
+    "name": "danielgomes/php-estrutura",
+    "description": "Estrutura PHP",
+    "authors": [
+        {
+            "name": "Daniel R. Gomes",
+            "email": "dr987100@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "files": [
+            "app/helpers/constants.php",
+            "app/router/router.php"
+        ],
+        "psr-4": {
+            "app\\":"app"
+        }
+    }
+}
