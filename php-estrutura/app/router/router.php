@@ -5,6 +5,7 @@ function routers() {
 }
 
 //verifica quais rotas batem com a descricao de routes.php
+//URI estatica
 function exactMatchUriInArrayRoutes($uri, $routes) {
     if(array_key_exists($uri, $routes)) {
         //uri chamando routes no indice uri
@@ -16,9 +17,11 @@ function exactMatchUriInArrayRoutes($uri, $routes) {
 }
 
 //Pega, dinamicamente, a uri correta de acordo com as rotas e retora em um array
+ //Dinamica
 function regularExpressionMatachArrayRoutes($uri, $routes) {
     return array_filter(
         //array_keys($routes)
+        ///user/4
         $routes,
         function ($value) use($uri) {
             $regex = str_replace('/', '\/', ltrim($value, '/'));
@@ -27,6 +30,7 @@ function regularExpressionMatachArrayRoutes($uri, $routes) {
         },
         ARRAY_FILTER_USE_KEY
     );
+
 }
 
 //Caso uri seja vazia ele vai verificar e obter uma rota ou parametros da rota
@@ -43,6 +47,18 @@ function params ($uri, $matchedUri) {
 
     return [];
     
+}
+
+//Formata a URI para alterar os indexs para o nome da var
+function paramsFormat($uri, $params) {
+    $uri = explode("/", ltrim($uri, "/"));
+    $paramsData = [];
+    foreach ($params as $index => $param) {
+        $paramsData[$uri[$index-1]] = $param;
+                
+    }
+
+    return $paramsData;
 }
 
 //Pega a uri gerada no processo
@@ -70,8 +86,10 @@ function router() {
 
         if (!empty($matchedUri)) {
             $params = params($uri, $matchedUri);
+            $params = paramsFormat($uri, $params);
+            
             var_dump($params);
-             die();
+            die();
         }        
     }
     
