@@ -39,7 +39,7 @@ function params ($uri, $matchedUri) {
         //retorna uma array que na posicao 0 tem os dados que queremos
         $matchedtoGetParams = array_keys($matchedUri)[0];
         return array_diff(
-            explode('/', ltrim($uri, '/')),
+            $uri,
             explode('/', ltrim($matchedtoGetParams, '/'))
         ); 
         
@@ -49,13 +49,15 @@ function params ($uri, $matchedUri) {
     
 }
 
-//Formata a URI para alterar os indexs para o nome da var
+//Formata a URI para alterar os indexs para o nome da var dinamicas
 function paramsFormat($uri, $params) {
-    $uri = explode("/", ltrim($uri, "/"));
+    
     $paramsData = [];
+ 
     foreach ($params as $index => $param) {
         $paramsData[$uri[$index-1]] = $param;
-                
+
+        
     }
 
     return $paramsData;
@@ -69,10 +71,7 @@ function router() {
 
     //Exemplo mostrando como usar um array diff
     /*$arr1 = [
-        'user', '1', 'name', 'daniel'
-    ];
-    $arr2 = [
-        'user', '[0-9]+', 'name', ''
+        ' er', '[0-9]+', 'name', ''
     ];
 
     var_dump(array_diff($arr1, $arr2));
@@ -81,19 +80,23 @@ function router() {
     $matchedUri = exactMatchUriInArrayRoutes($uri, $routes);
 
     //caso $matchedUri for vazia ele entra aqui
+    $params = [];
     if(empty($matchedUri)){
         $matchedUri = regularExpressionMatachArrayRoutes($uri, $routes);
 
-        if (!empty($matchedUri)) {
-            $params = params($uri, $matchedUri);
-            $params = paramsFormat($uri, $params);
+        //Explode na URI para remover a barra inicial
+        $uri = explode("/", ltrim($uri, "/"));
+        $params = params($uri, $matchedUri);
+        $params = paramsFormat($uri, $params);
             
-            var_dump($params);
-            die();
-        }        
+            
+    }
+
+    if (!empty($matchedUri)) {
+        controller($matchedUri, $params);
+        return;
     }
     
-    var_dump($matchedUri);
-    die();
+    throw new Exception("Deu errado");
     
 }
