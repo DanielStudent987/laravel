@@ -5,7 +5,7 @@ namespace app\controllers;
 class User 
 {
     public function show($params) {
-        var_dump("show");
+        var_dump($params);
         die();
     }
 

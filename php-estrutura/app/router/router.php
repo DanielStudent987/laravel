@@ -93,10 +93,12 @@ function router() {
     }
 
     if (!empty($matchedUri)) {
-        controller($matchedUri, $params);
-        return;
+        return controller($matchedUri, $params);
+        
+    } else {
+        throw new Exception("Deu errado");
     }
     
-    throw new Exception("Deu errado");
+    
     
 }

@@ -17,7 +17,7 @@ function controller ($matchedUri, $params) {
         throw new Exception("Method {$method} nao existe no Controller {$controller}");
     }
 
-    $controllerInstance->$method($params);
+    return $controllerInstance->$method($params);
     
 }
 
