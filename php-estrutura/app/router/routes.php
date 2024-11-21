@@ -1,6 +1,7 @@
 <?php
 
 //retorna as rotas dos indices da url
+//user/5
 return [
     '/' => 'Home@index',
     '/user/create' => 'User@create',

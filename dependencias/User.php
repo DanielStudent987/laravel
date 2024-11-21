@@ -2,7 +2,7 @@
 
 Class User {
 
-    public function data (){
+    public function all (){
         return "data";
     }
 
