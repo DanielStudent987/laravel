@@ -9,4 +9,8 @@ class Invoice extends Model
 {
     use HasFactory;
     
+    //Relacionamento entre tabelas do bd
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

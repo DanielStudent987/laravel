@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\UserResorce;
 use App\Models\User;
 use Illuminate\Http\Request;
 //use 
@@ -14,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::select('name as Name', 'email')->get();
+        //return User::select('name as Name', 'email')->get();
+        return UserResorce::collection(User::all());
     }
 
     /**
@@ -38,7 +40,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        //Adiciona isso e depois adiciona a rota users/{user}
+        return new UserResorce(User::where('id', $id)->first());
     }
 
     /**
