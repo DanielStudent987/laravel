@@ -17,6 +17,7 @@ class InvoiceFactory extends Factory
      */
     public function definition(): array
     {
+        //faker adiciona um valor teste ao banco de dados/
         $paid = $this->faker->boolean();
         return [
             //
